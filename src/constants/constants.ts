@@ -1,19 +1,19 @@
 import { FilterProps } from '@/types/types'
 
-export const Filters: FilterProps[] = [
+export const FiltersData: FilterProps[] = [
 	{
 		index: 0,
-		image: '/images/Fridge.svg',
+		image: '/icons/Fridge.svg',
 		title: 'Electrodomesticos',
 		height: 70
 	},
-	{ index: 1, image: '/images/Clothes.svg', title: 'Ropa', height: 70 },
-	{ index: 2, image: '/images/Games.svg', title: 'Juguetes', height: 70 },
+	{ index: 1, image: '/icons/Clothes.svg', title: 'Ropa', height: 70 },
+	{ index: 2, image: '/icons/Games.svg', title: 'Juguetes', height: 70 },
 	{
 		index: 3,
-		image: '/images/Tecnologi.svg',
+		image: '/icons/Tecnologi.svg',
 		title: 'Tecnologia',
 		height: 70
 	},
-	{ index: 4, image: '/images/Chair.svg', title: 'Muebles', height: 70 }
+	{ index: 4, image: '/icons/Chair.svg', title: 'Muebles', height: 70 }
 ]
