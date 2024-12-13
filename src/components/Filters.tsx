@@ -1,6 +1,5 @@
 import { FiltersData } from '@/constants/constants'
 import { Filter } from './Filter'
-import Image from 'next/image'
 import { FC } from 'react'
 
 export const Filters: FC = () => {
@@ -13,13 +12,13 @@ export const Filters: FC = () => {
 						{...filter}
 					/>
 				))}
-				<Image
+				{/* <Image
 					className='hover:scale-110'
 					src='/icons/Next.svg'
 					alt='next category'
 					width={60}
 					height={60}
-				/>
+				/> */}
 			</div>
 		</>
 	)

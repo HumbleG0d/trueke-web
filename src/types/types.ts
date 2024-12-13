@@ -13,6 +13,7 @@ export type ProductCard = {
 	estado: string
 	propietario: string
 	numero_de_estrellas: number
+	category: string
 }
 
 export type User = {
@@ -29,7 +30,7 @@ export type ProductProps = {
 	product: ProductCard
 }
 
-export type ProductRegister ={
+export type ProductRegister = {
 	nombre: string
 	image: string
 	estado: string

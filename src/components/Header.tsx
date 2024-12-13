@@ -10,8 +10,8 @@ export const Header = () => {
 						<Image
 							src='/icons/Icon.svg'
 							alt='Logo Truek-e'
-							width={100}
-							height={100}
+							width={80}
+							height={80}
 						/>
 						<strong className='text-2xl'>Truek-e</strong>
 					</div>

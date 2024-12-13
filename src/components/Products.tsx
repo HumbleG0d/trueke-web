@@ -7,17 +7,15 @@ interface DisplayProductsProps {
 
 export const Products = ({ products }: DisplayProductsProps) => {
 	return (
-		<>
-			<div className=' text-[#064E3B] grid grid-cols-4 gap-4 justify-center items-center p-3'>
-				{products.map((product: ProductCard) => {
-					return (
-						<Product
-							key={product.id}
-							{...product}
-						/>
-					)
-				})}
-			</div>
-		</>
+		<div className=' text-[#064E3B] grid grid-cols-4 gap-4 justify-center items-center p-3'>
+			{products.map((product: ProductCard) => {
+				return (
+					<Product
+						key={product.id}
+						{...product}
+					/>
+				)
+			})}
+		</div>
 	)
 }

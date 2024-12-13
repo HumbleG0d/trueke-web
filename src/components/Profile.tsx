@@ -2,7 +2,7 @@
 import { User } from '@/types/types'
 import { useState } from 'react'
 
-export function Profile({ user }: { user: User | undefined }) {
+export function Profile({ user }: { user: User }) {
 	const [isEditing, setIsEditing] = useState(false)
 	const [userData] = useState(user)
 
