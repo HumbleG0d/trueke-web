@@ -1,0 +1,94 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "john_doe",
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "bio": "Software developer with 10 years of experience.",
+            "age": 30,
+            "location": "San Francisco, USA"
+        },
+        {
+            "id": 2,
+            "username": "jane_smith",
+            "name": "Jane Smith",
+            "email": "jane.smith@example.com",
+            "bio": "Graphic designer and digital artist.",
+            "age": 27,
+            "location": "New York, USA"
+        },
+        {
+            "id": 3,
+            "username": "mike_123",
+            "name": "Mike Johnson",
+            "email": "mike.johnson@example.com",
+            "bio": "Tech enthusiast and blogger.",
+            "age": 35,
+            "location": "Austin, USA"
+        },
+        {
+            "id": 4,
+            "username": "sarah.connor",
+            "name": "Sarah Connor",
+            "email": "sarah.connor@example.com",
+            "bio": "Cybersecurity expert and AI researcher.",
+            "age": 32,
+            "location": "Los Angeles, USA"
+        },
+        {
+            "id": 5,
+            "username": "emily_blake",
+            "name": "Emily Blake",
+            "email": "emily.blake@example.com",
+            "bio": "Freelance writer and travel blogger.",
+            "age": 29,
+            "location": "Seattle, USA"
+        },
+        {
+            "id": 6,
+            "username": "david_lee",
+            "name": "David Lee",
+            "email": "david.lee@example.com",
+            "bio": "Full-stack developer specializing in React and Node.js.",
+            "age": 28,
+            "location": "Chicago, USA"
+        },
+        {
+            "id": 7,
+            "username": "olivia_martin",
+            "name": "Olivia Martin",
+            "email": "olivia.martin@example.com",
+            "bio": "Entrepreneur and startup consultant.",
+            "age": 34,
+            "location": "Miami, USA"
+        },
+        {
+            "id": 8,
+            "username": "noah_brown",
+            "name": "Noah Brown",
+            "email": "noah.brown@example.com",
+            "bio": "Mobile app developer and UX enthusiast.",
+            "age": 25,
+            "location": "Denver, USA"
+        },
+        {
+            "id": 9,
+            "username": "ava_wilson",
+            "name": "Ava Wilson",
+            "email": "ava.wilson@example.com",
+            "bio": "Digital marketer and SEO specialist.",
+            "age": 31,
+            "location": "Boston, USA"
+        },
+        {
+            "id": 10,
+            "username": "liam_clark",
+            "name": "Liam Clark",
+            "email": "liam.clark@example.com",
+            "bio": "Data scientist with a passion for machine learning.",
+            "age": 26,
+            "location": "Phoenix, USA"
+        }
+    ]
+}
