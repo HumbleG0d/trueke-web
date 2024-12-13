@@ -28,3 +28,20 @@ export type User = {
 export type ProductProps = {
 	product: ProductCard
 }
+
+export type ProductRegister ={
+	nombre: string
+	image: string
+	estado: string
+	descripcion?: string
+}
+
+export type UserRegister = {
+	name: string
+	lastname: string
+	age: number
+	email: string
+	password: string
+	location: string
+	bio?: string
+}

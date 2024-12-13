@@ -13,7 +13,7 @@ export const Product = ({
 }: ProductCard) => {
 	return (
 		<Link href={`/products/${id}`}>
-			<div className='flex flex-col text-[#064E3B] rounded-lg  border-black shadow-lg p-4 hover:shadow-xl transition-shadow bg-gray-100 items-center'>
+			<div className='flex flex-col text-[#064E3B] rounded-lg  border-black shadow-lg p-4 hover:shadow-xl hover:scale-105 hover:bg-gray-200 transition-shadow bg-gray-100 items-center'>
 				<div className='relative w-[220px] h-[270px]'>
 					<Image
 						className='rounded-lg object-cover'

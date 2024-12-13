@@ -1,11 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
-import { RegistraProducto } from './RegistrarProducto'
 export const Header = () => {
-	const [showModal, setShowModal] = useState(false)
-
 	return (
 		<div className='bg-[#064E3B]'>
 			<div className='flex flex-row  justify-between items-center px-8 py-2'>
@@ -26,14 +22,7 @@ export const Header = () => {
 					</strong>
 				</div>
 				<div className='flex flex-row items-center gap-2'>
-					<button
-						className='bg-white rounded-lg p-2 border-1 border-black '
-						onClick={() => setShowModal(true)}
-					>
-						<span className='text-xl text-black'>Publica tu oferta</span>
-					</button>
-
-					<Link href='/perfil/1'>
+					<Link href='/profile/1'>
 						<div>
 							<Image
 								className='object contain'
@@ -47,51 +36,24 @@ export const Header = () => {
 				</div>
 			</div>
 			<div className='flex flex-row justify-center items-center gap-2 p-2'>
-				<form className='p-2'>
-					<ul className='grid grid-cols-4  w-full text-center px-10  text-black'>
-						<li className=' py-2 border-2 bg-white border-black rounded-l-lg'>
-							<input
-								type='text'
-								name='categoria'
-								placeholder='Explora Productos'
-								className='w-full bg-transparent outline-none text-center'
-							/>
-						</li>
-						<li className=' py-2 border-2 bg-white border-black '>
-							<input
-								type='text'
-								name='ofrecido'
-								placeholder='Que ofreces'
-								className='w-full bg-transparent outline-none text-center'
-							/>
-						</li>
-						<li className=' py-2 border-2 bg-white border-black '>
-							<input
-								type='text'
-								name='buscado'
-								placeholder='Qué Buscas'
-								className='w-full bg-transparent outline-none text-center'
-							/>
-						</li>
-						<li className=' py-2 border-2 bg-white border-black rounded-r-lg'>
-							<input
-								type='text'
-								name='ubicacion'
-								placeholder='Ubicación'
-								className='w-full bg-transparent outline-none text-center'
-							/>
-						</li>
-					</ul>
-				</form>
-				<Image
-					className='hover:scale-110 transition-transform duration-200 cursor-pointer'
-					src='/icons/Search.svg'
-					alt='Buscar'
-					width={55}
-					height={55}
-				/>
+				<div className='grid grid-cols-3  w-full text-center px-10  text-black items-center'>
+					<a
+						href={'/products'}
+						className=' py-2 border-2 bg-white border-black rounded-l-lg'
+					>
+						Productos
+					</a>
+					<a
+						href={'/products/create'}
+						className=' py-2 border-2 bg-white border-black '
+					>
+						Publica oferta
+					</a>
+					<animate className=' py-2 border-2 bg-white border-black rounded-r-lg'>
+						Ubicacion
+					</animate>
+				</div>
 			</div>
-			{showModal && <RegistraProducto setShowModal={setShowModal} />}
 		</div>
 	)
 }

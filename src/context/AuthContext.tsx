@@ -64,7 +64,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(data.user));
 
       // Redirigir al dashboard o a la página deseada
-      router.push('/dashboard');
+      router.push('/');
     } catch (error: any) {
       throw new Error(error.message || 'Error al iniciar sesión');
     }

@@ -14,6 +14,7 @@ export default function Product({ params }: ProductProps) {
 		(product: ProductCard) => product.id === parseInt(id)
 	)
 	return (
+        
 		<div className='flex flex-col  h-full w-full bg-gray-100  p-6 border border-gray-200'>
 			<div className='min-h-screen w-full  bg-white  p-8 flex flex-col items-center text-black rounded-lg  shadow-md justify-between gap-10'>
 				<div className='flex flex-row gap-4 w-full h-full'>
