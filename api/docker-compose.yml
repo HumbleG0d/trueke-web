@@ -1,0 +1,29 @@
+services:
+  postgres:
+    container_name: db_postgres_truek
+    image: postgres
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgres/data
+    networks:
+      - spring_server_network
+
+  anime_server:
+    container_name: api_truek
+    image: api_truek
+    ports:
+      - "8081:8081"
+    networks:
+      - spring_server_network
+    depends_on:
+      - postgres
+
+volumes:
+  postgres:
+
+networks:
+  spring_server_network:
+    driver: bridge
