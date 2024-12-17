@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users_login")
 @AllArgsConstructor
@@ -25,6 +27,9 @@ public class UserLogin {
 
   @NotNull
   private String token;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private List<Product> productList;
 
   public UserLogin(UserLoginRequest loginRequest , String token) {
     this.email = loginRequest.email();

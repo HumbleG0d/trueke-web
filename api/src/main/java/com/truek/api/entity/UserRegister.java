@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
@@ -33,9 +31,6 @@ public class UserRegister {
 
   @NotNull
   private String password;
-
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-  private List<Product> productList;
 
   public UserRegister(UserRegisterRequest userRegisterRequest , String password) {
     this.email = userRegisterRequest.email();
