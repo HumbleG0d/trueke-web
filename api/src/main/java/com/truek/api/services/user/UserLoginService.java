@@ -14,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -25,13 +27,18 @@ public class UserLoginService implements IUserLoginService {
   private final JWTService jwtService;
   @Override
   public UserLoginDTO login(UserLoginRequest userLogin) {
-    // 1. Buscar usuario por email
-
     var existingUser = registerRepository.findByEmail(userLogin.email());
     if (existingUser == null) {
       throw new UsernameNotFoundException("Usuario no encontrado.");
     }
-    // 2. Validar credenciales
+
+    //Verificar si el usuario ya tiene una sesión activa
+    Optional<UserLogin> existingLogin = userLoginRepository.findByEmail(userLogin.email());
+    if (existingLogin.isPresent()) {
+      userLoginRepository.delete(existingLogin.get());
+    }
+
+    //Validar credenciales
     Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(userLogin.email(), userLogin.password())
     );
@@ -40,10 +47,9 @@ public class UserLoginService implements IUserLoginService {
       throw new IllegalArgumentException("Credenciales incorrectas.");
     }
 
-    // 3. Guardar el login (si es necesario) y generar el JWT
-
+    //Generar el JWT y guardar el login
     String token = jwtService.generateToken(userLogin.email());
-    userLoginRepository.save(new UserLogin(userLogin , token)); // Guardar login si es necesario
-    return new UserLoginDTO(userLogin.email(), token); // Retornar el token JWT
+    userLoginRepository.save(new UserLogin(userLogin, token));
+    return new UserLoginDTO(userLogin.email(), token);
   }
 }
