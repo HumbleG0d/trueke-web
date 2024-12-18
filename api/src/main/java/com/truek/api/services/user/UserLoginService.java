@@ -32,13 +32,19 @@ public class UserLoginService implements IUserLoginService {
       throw new UsernameNotFoundException("Usuario no encontrado.");
     }
 
-    //Verificar si el usuario ya tiene una sesión activa
+    //Verificar si ya hay una sesión activa
     Optional<UserLogin> existingLogin = userLoginRepository.findByEmail(userLogin.email());
+    String token = jwtService.generateToken(userLogin.email());
+
     if (existingLogin.isPresent()) {
-      userLoginRepository.delete(existingLogin.get());
+      // Actualizar el token en lugar de borrar el registro
+      UserLogin userLoginSession = existingLogin.get();
+      userLoginSession.setToken(token); // Actualizar el token
+      userLoginRepository.save(userLoginSession); // Guardar cambios
+    } else {
+      userLoginRepository.save(new UserLogin(userLogin, token));
     }
 
-    //Validar credenciales
     Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(userLogin.email(), userLogin.password())
     );
@@ -47,9 +53,6 @@ public class UserLoginService implements IUserLoginService {
       throw new IllegalArgumentException("Credenciales incorrectas.");
     }
 
-    //Generar el JWT y guardar el login
-    String token = jwtService.generateToken(userLogin.email());
-    userLoginRepository.save(new UserLogin(userLogin, token));
     return new UserLoginDTO(userLogin.email(), token);
   }
 }
