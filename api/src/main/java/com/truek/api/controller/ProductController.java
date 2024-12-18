@@ -10,10 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
-
 @RestController
-@RequestMapping("/app")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class ProductController {
   private final ProductService productService;
