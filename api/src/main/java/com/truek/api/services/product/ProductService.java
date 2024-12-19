@@ -55,7 +55,8 @@ public class ProductService implements IProductService {
   }
 
   private ProductDTO toProductDTO(Product product , String user) {
-    return  new ProductDTO(
+    return new ProductDTO(
+      product.getId(),
             product.getImageUrl(),
             product.getName(),
             product.getStatus(),
