@@ -2,6 +2,7 @@ package com.truek.api.services.product;
 
 import com.truek.api.cloudinary.CloudinaryService;
 import com.truek.api.dtos.ProductDTO;
+import com.truek.api.entity.Categories;
 import com.truek.api.entity.Category;
 import com.truek.api.entity.Product;
 import com.truek.api.entity.UserLogin;
@@ -15,7 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,13 +31,18 @@ public class ProductService implements IProductService {
   @Override
   public ProductDTO addProduct(ProductRequest productRequest) {
     String imageUrl = cloudinaryService.upload(productRequest.image());
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String email = authentication.getName();
+    var email = getEmail();
     UserLogin user = userLoginRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-    String user_name = userRegisterRepository.findByEmail(email).getUsername();
     var product = productRepository.save(createProduct(productRequest , user , imageUrl));
+    var user_name =userRegisterRepository.findByEmail(email).getUsername();
     return toProductDTO(product , user_name );
   }
+
+  private String getEmail(){
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    return authentication.getName();
+  }
+
 
   private Product createProduct(ProductRequest productRequest, UserLogin user, String imageUrl) {
     // Buscar categoría existente por nombre o ID
@@ -63,5 +70,17 @@ public class ProductService implements IProductService {
             user
     );
   }
+
+  @Override
+  public List<ProductDTO> getAllProducts() {
+    return productRepository.findAll().stream().map(product -> toProductDTO(product , userRegisterRepository.findByEmail(product.getUser().getEmail()).getUsername())).collect(Collectors.toList());
+  }
+
+  @Override
+  public List<ProductDTO> getProductsByCategory(String category) {
+    var category_name = categoryRepository.findByCategories(Categories.valueOf(category));
+    return productRepository.findByCategory(category_name.get()).stream().map(product -> toProductDTO(product , userRegisterRepository.findByEmail(product.getUser().getEmail()).getUsername())).collect(Collectors.toList());
+  }
+
 
 }
