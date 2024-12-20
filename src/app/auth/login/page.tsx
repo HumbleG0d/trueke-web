@@ -4,6 +4,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useLogin } from '@/hooks/useLogin'
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d).+$/
@@ -12,6 +13,7 @@ const Login: React.FC = () => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
 	const [error, setError] = useState<string>('')
+	const { handleLogin } = useLogin()
 
 	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value)
@@ -40,11 +42,11 @@ const Login: React.FC = () => {
 			return
 		}
 
-		// Aquí puedes manejar la lógica de autenticación real
+
 		console.log('Email:', email)
 		console.log('Password:', password)
+		handleLogin({ email, password })
 
-		// Limpiar el formulario después de la simulación de autenticación
 		setEmail('')
 		setPassword('')
 	}

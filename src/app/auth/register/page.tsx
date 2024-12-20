@@ -1,81 +1,59 @@
-// pages/register.tsx
 'use client'
 import { useState, ChangeEvent, FormEvent } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRegisterUser } from '@/hooks/useRegisterUser'
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const passwordRegex = /^(?=.*[A-Z])(?=.*\d).+$/
+interface NewUser {
+	name: string
+	email: string
+	password: string
+	confirmPassword: string
+	location: string
+	description: string
+}
 
 const Register: React.FC = () => {
-	const [name, setName] = useState<string>('')
-	const [email, setEmail] = useState<string>('')
-	const [password, setPassword] = useState<string>('')
-	const [confirmPassword, setConfirmPassword] = useState<string>('')
+	const [formData, setFormData] = useState<NewUser>({
+		name: '',
+		email: '',
+		password: '',
+		confirmPassword: '',
+		location: '',
+		description: ''
+	})
 	const [error, setError] = useState<string>('')
 	const [success, setSuccess] = useState<string>('')
+	const { validateForm, registerUser } = useRegisterUser()
 
-	const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setName(e.target.value)
-	}
-
-	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value)
-	}
-
-	const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setPassword(e.target.value)
-	}
-
-	const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setConfirmPassword(e.target.value)
+	const handleChange = (
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		const { name, value } = e.target
+		setFormData((prev) => ({
+			...prev,
+			[name]: value
+		}))
 	}
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		// Resetear los mensajes antes de la validación
 		setError('')
 		setSuccess('')
 
-		// Validar el nombre
-		if (name.trim().length < 2) {
-			setError('El nombre debe tener al menos 2 caracteres.')
-			return
-		}
+		validateForm(formData)
 
-		// Validar el correo electrónico
-		if (!emailRegex.test(email)) {
-			setError('Por favor, introduce un correo electrónico válido.')
-			return
-		}
-
-		// Validar la contraseña
-		if (!passwordRegex.test(password)) {
-			setError(
-				'La contraseña debe contener al menos una letra mayúscula y un número.'
-			)
-			return
-		}
-
-		// Validar que las contraseñas coincidan
-		if (password !== confirmPassword) {
-			setError('Las contraseñas no coinciden.')
-			return
-		}
-
-		// Aquí puedes manejar la lógica de registro real
-		console.log('Nombre:', name)
-		console.log('Email:', email)
-		console.log('Password:', password)
-
-		// Simulación de registro exitoso
+		console.log('Datos del formulario:', formData)
+		registerUser(formData)
 		setSuccess('Registro exitoso. Puedes iniciar sesión ahora.')
-
-		// Limpiar el formulario después de la simulación de registro
-		setName('')
-		setEmail('')
-		setPassword('')
-		setConfirmPassword('')
+		setFormData({
+			name: '',
+			email: '',
+			password: '',
+			confirmPassword: '',
+			location: '',
+			description: ''
+		})
 	}
 
 	return (
@@ -100,6 +78,7 @@ const Register: React.FC = () => {
 						onSubmit={handleSubmit}
 						className='space-y-4'
 					>
+						{/* Campos existentes */}
 						<div>
 							<label
 								htmlFor='name'
@@ -110,9 +89,10 @@ const Register: React.FC = () => {
 							<input
 								type='text'
 								id='name'
+								name='name'
 								className='w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-								value={name}
-								onChange={handleNameChange}
+								value={formData.name}
+								onChange={handleChange}
 								required
 								placeholder='Tu nombre'
 							/>
@@ -127,9 +107,10 @@ const Register: React.FC = () => {
 							<input
 								type='email'
 								id='email'
+								name='email'
 								className='w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-								value={email}
-								onChange={handleEmailChange}
+								value={formData.email}
+								onChange={handleChange}
 								required
 								placeholder='ejemplo@correo.com'
 							/>
@@ -144,9 +125,10 @@ const Register: React.FC = () => {
 							<input
 								type='password'
 								id='password'
+								name='password'
 								className='w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-								value={password}
-								onChange={handlePasswordChange}
+								value={formData.password}
+								onChange={handleChange}
 								required
 								placeholder='********'
 							/>
@@ -161,11 +143,48 @@ const Register: React.FC = () => {
 							<input
 								type='password'
 								id='confirmPassword'
+								name='confirmPassword'
 								className='w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-								value={confirmPassword}
-								onChange={handleConfirmPasswordChange}
+								value={formData.confirmPassword}
+								onChange={handleChange}
 								required
 								placeholder='********'
+							/>
+						</div>
+						{/* Nuevos campos */}
+						<div>
+							<label
+								htmlFor='location'
+								className='block text-gray-700'
+							>
+								Ubicación
+							</label>
+							<input
+								type='text'
+								id='location'
+								name='location'
+								className='w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+								value={formData.location}
+								onChange={handleChange}
+								required
+								placeholder='Tu ubicación'
+							/>
+						</div>
+						<div>
+							<label
+								htmlFor='description'
+								className='block text-gray-700'
+							>
+								Descripción
+							</label>
+							<textarea
+								id='description'
+								name='description'
+								className='w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+								value={formData.description}
+								onChange={handleChange}
+								placeholder='Descríbete brevemente'
+								rows={3}
 							/>
 						</div>
 						<button

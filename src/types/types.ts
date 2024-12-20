@@ -31,10 +31,12 @@ export type ProductProps = {
 }
 
 export type ProductRegister = {
+	userId: number
 	nombre: string
 	image: string
 	estado: string
 	descripcion?: string
+	categoria: string
 }
 
 export type UserRegister = {
