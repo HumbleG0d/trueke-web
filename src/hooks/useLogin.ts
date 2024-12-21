@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { useAuth } from '@/context/AuthContext'
 import { User } from '@/types/types'
+import { useAuth } from '@/context/AuthContext'
 
 interface LoginCredentials {
 	email: string
@@ -22,8 +22,8 @@ export const useLogin = () => {
 				'http://localhost:8081/api/login/user',
 				credentials
 			)
+
 			login(response.data)
-			return response.data
 		} catch (err) {
 			setError('Error al iniciar sesión. Verifica tus credenciales.')
 			throw err

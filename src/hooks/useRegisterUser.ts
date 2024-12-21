@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { useAuth } from '@/context/AuthContext'
 import { NewUser } from '@/types/types'
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d).+$/
 
 export const useRegisterUser = () => {
-	const { login } = useAuth()
 	const [isLoading, setIsLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
 
@@ -17,7 +15,6 @@ export const useRegisterUser = () => {
 
 		try {
 			const response = await axios.post('http://localhost:8081/api/register/user', userData)
-			login(response.data)
 			return response.data
 		} catch (err: unknown) {
 			if (axios.isAxiosError(err)) {

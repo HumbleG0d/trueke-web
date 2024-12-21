@@ -19,10 +19,7 @@ export type ProductData = {
 export type User = {
 	id: number // ID único del usuario
 	username: string // Nombre de usuario
-	name: string // Nombre completo
 	email: string // Correo electrónico
-	bio: string // Breve descripción del usuario
-	age: number // Edad del usuario
 	location: string // Ubicación del usuario
 }
 

@@ -29,9 +29,12 @@ export function useProducts() {
 	const findProduct = (id: number) =>
 		products.find((product) => product.id === id)
 
+	const findByUserId = (id: number) =>
+		products.filter((product) => product.idUser === id)
+
 	useEffect(() => {
 		fetchProducts()
 	}, [])
 
-	return { products, loading, error, findProduct }
+	return { products, loading, error, findProduct, findByUserId }
 }
