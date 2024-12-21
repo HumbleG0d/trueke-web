@@ -67,6 +67,7 @@ public class ProductService implements IProductService {
             product.getImageUrl(),
             product.getName(),
             product.getStatus(),
+            product.getUser().getId(),
             user
     );
   }

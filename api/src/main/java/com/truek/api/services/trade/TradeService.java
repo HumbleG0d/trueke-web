@@ -69,8 +69,8 @@ public class TradeService implements ITradeService {
     return trades.stream().map(trade ->
             new TradeAll(trade.getId(),
                     trade.getStatus(),
-                    new TradeProductDTO(trade.getProductOffered().getId(), trade.getProductOffered().getName()),
-                    new TradeProductDTO(trade.getProductRequested().getId(), trade.getProductRequested().getName()),
+                    new TradeProductDTO(trade.getProductOffered().getName()),
+                    new TradeProductDTO(trade.getProductRequested().getName()),
                     trade.getCreatedAt())
     ).toList();
   }
