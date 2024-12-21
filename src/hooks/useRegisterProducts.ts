@@ -13,16 +13,23 @@ export const useRegisterProducts = () => {
 		try {
 			const formData = new FormData()
 			formData.append('userId', product.idUser.toString())
-			formData.append('nombre', product.name || '')
-			formData.append('descripcion', product.description || '')
-			formData.append('estado', product.status || '')
-			formData.append('categoria', product.category || '')
-			formData.append('image', product.image || '')
+			formData.append('name', product.name || '')
+			formData.append('description', product.description || '')
+			formData.append('status', product.status || '')
+			formData.append('categories', product.category || '')
 			if (file) {
 				formData.append('image', file)
 			}
 
-			const response = await axios.post('/api/products', formData)
+			const response = await axios.post(
+				'http://localhost:8081/api/add/product',
+				formData,
+				{
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
+				}
+			)
 			setIsLoading(false)
 			return response.data
 		} catch (error) {

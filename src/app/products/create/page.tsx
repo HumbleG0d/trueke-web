@@ -5,26 +5,27 @@ import { ButtonToHome } from '@/components/ui/ButtonToHome'
 import Image from 'next/image'
 import { useRegisterProducts } from '@/hooks/useRegisterProducts'
 import { useAuth } from '@/context/AuthContext'
+import { LoginButton } from '@/components/ui/LoginButton'
 
 export default function RegisterProduct() {
 	const { registerProduct } = useRegisterProducts()
 	const [file, setFile] = useState<File | null>(null)
 	const { user } = useAuth()
 	const [product, setProduct] = useState<ProductRegister>({
-		userId: user?.id ?? 0, // Provide default value when user id is undefined
-		nombre: '',
+		idUser: user?.id ?? 0, // Provide default value when user id is undefined
+		name: '',
 		image: '',
-		descripcion: '',
-		estado: '',
-		categoria: ''
+		description: '',
+		status: '',
+		category: ''
 	})
 	const [errors, setErrors] = useState<{ [key: string]: string }>({})
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 		const validationErrors: { [key: string]: string } = {}
-		if (!product.nombre) validationErrors.nombre = 'El nombre es requerido.'
-		if (!product.descripcion)
+		if (!product.name) validationErrors.nombre = 'El nombre es requerido.'
+		if (!product.description)
 			validationErrors.descripcion = 'La descripción es requerida.'
 
 		if (Object.keys(validationErrors).length > 0) {
@@ -75,9 +76,9 @@ export default function RegisterProduct() {
 							</label>
 							<input
 								type='text'
-								value={product.nombre}
+								value={product.name}
 								onChange={(e) =>
-									setProduct({ ...product, nombre: e.target.value })
+									setProduct({ ...product, name: e.target.value })
 								}
 								className='w-full px-3 py-2 border rounded'
 								placeholder='Ingrese el nombre'
@@ -119,9 +120,9 @@ export default function RegisterProduct() {
 						<div className='col-span-1'>
 							<label className='block text-black mb-2'>Estado</label>
 							<select
-								value={product.estado}
+								value={product.status}
 								onChange={(e) =>
-									setProduct({ ...product, estado: e.target.value })
+									setProduct({ ...product, status: e.target.value })
 								}
 								className='w-full px-3 py-2 border rounded'
 							>
@@ -137,9 +138,9 @@ export default function RegisterProduct() {
 						<div className='col-span-1'>
 							<label className='block text-black mb-2'>Categoria</label>
 							<select
-								value={product.categoria}
+								value={product.category}
 								onChange={(e) =>
-									setProduct({ ...product, categoria: e.target.value })
+									setProduct({ ...product, category: e.target.value })
 								}
 								className='w-full px-3 py-2 border rounded'
 							>
@@ -157,11 +158,11 @@ export default function RegisterProduct() {
 						<div>
 							<label className='block text-black mb-2'>Descripción</label>
 							<textarea
-								value={product.descripcion}
+								value={product.description}
 								onChange={(e) => {
 									e.target.style.height = 'auto'
 									e.target.style.height = e.target.scrollHeight + 'px'
-									setProduct({ ...product, descripcion: e.target.value })
+									setProduct({ ...product, description: e.target.value })
 								}}
 								className='w-full px-3 py-2 border rounded resize-none min-h-[100px] overflow-hidden'
 								placeholder='Ingrese la descripción'
@@ -172,17 +173,20 @@ export default function RegisterProduct() {
 						</div>
 						<div className='flex flex-row gap-4 col-span-2'>
 							<ButtonToHome text='Cancelar' />
-							<button
-								type='submit'
-								disabled={!user}
-								className={`w-full py-2 rounded ${
-									!user
-										? 'bg-gray-300 cursor-not-allowed text-gray-500'
-										: 'bg-white text-green-600 hover:bg-gray-200'
-								}`}
-							>
-								{!user ? 'Inicia sesión para registrar' : 'Registrar Producto'}
-							</button>
+
+							{!user ? (
+								<LoginButton />
+							) : (
+								<button
+									type='submit'
+									disabled={!user}
+									className={
+										'w-full py-2 roundedbg-white text-green-600 hover:bg-gray-200 items-center text-center'
+									}
+								>
+									Registrar Producto
+								</button>
+							)}
 						</div>
 					</form>
 				</div>

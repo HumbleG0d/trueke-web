@@ -1,16 +1,15 @@
 'use client'
 import { Profile } from '@/components/Profile'
 import { useProfile } from '@/hooks/useUser'
+import { useParams } from 'next/navigation'
 
-interface ProfilePageProps {
-	params: {
-		id: string
+
+export default function ProfilePage() {
+	const { id } = useParams()
+	const { profile, isLoading } = useProfile(Number(id))
+	if (isLoading) {
+		return <p>Loading...</p>
 	}
-}
-
-export default function ProfilePage({ params }: ProfilePageProps) {
-	const { id } = params
-	const { profile } = useProfile(id)
 
 	return (
 		<div className='min-h-screen w-full bg-gray-100 p-8 flex flex-col items-center text-black'>

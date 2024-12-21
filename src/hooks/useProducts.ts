@@ -1,6 +1,8 @@
+'use client'
 import { ProductData } from '@/types/types'
 import { useState, useEffect } from 'react'
 import { products as productsData } from '@/mocks/products.json'
+
 export function useProducts() {
 	const [products, setProducts] = useState<ProductData[]>([])
 	const [loading, setLoading] = useState(true)
@@ -9,7 +11,7 @@ export function useProducts() {
 	const fetchProducts = async () => {
 		try {
 			setLoading(true)
-			const response = await fetch('/api/products')
+			const response = await fetch('http://localhost:8081/api/all/products')
 			const data = await response.json()
 			setProducts(data)
 		} catch (e: unknown) {
@@ -24,9 +26,12 @@ export function useProducts() {
 		}
 	}
 
+	const findProduct = (id: number) =>
+		products.find((product) => product.id === id)
+
 	useEffect(() => {
 		fetchProducts()
 	}, [])
 
-	return { products, loading, error }
+	return { products, loading, error, findProduct }
 }

@@ -8,12 +8,12 @@ interface UseProfileResult {
 	error: string | null
 }
 
-export function useProfile(userId: string): UseProfileResult {
+export function useProfile(userId: number): UseProfileResult {
 	const [profile, setProfile] = useState<User | null>(null)
 	const [isLoading, setIsLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
 
-	const user = users.find((user: User) => user.id === parseInt(userId))
+	const user = users.find((user: User) => user.id === userId)
 
 	useEffect(() => {
 		const fetchProfile = async () => {

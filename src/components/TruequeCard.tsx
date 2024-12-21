@@ -21,9 +21,9 @@ export const TruequeCard = memo(
 					<div className='flex justify-between items-center mb-4'>
 						<span
 							className={`px-2 py-1 rounded text-sm ${
-								trueque.status === 'pending'
+								trueque.status === 'PENDIENTE'
 									? 'bg-yellow-100 text-yellow-800'
-									: trueque.status === 'accepted'
+									: trueque.status === 'ACEPTADO'
 									? 'bg-green-100 text-green-800'
 									: 'bg-red-100 text-red-800'
 							}`}
@@ -31,7 +31,7 @@ export const TruequeCard = memo(
 							{trueque.status.charAt(0).toUpperCase() + trueque.status.slice(1)}
 						</span>
 
-						{trueque.status === 'pending' &&
+						{trueque.status === 'PENDIENTE' &&
 							trueque.requestedProduct.idUser === currentUserId && (
 								<div className='flex gap-2'>
 									<button
@@ -53,7 +53,7 @@ export const TruequeCard = memo(
 					<div className='flex space-x-4'>
 						<div className='flex-1'>
 							<Image
-								src={trueque.requestedProduct.image}
+								src={trueque.requestedProduct.imageUrl}
 								alt={trueque.requestedProduct.name}
 								width={200}
 								height={150}
@@ -73,7 +73,7 @@ export const TruequeCard = memo(
 
 						<div className='flex-1'>
 							<Image
-								src={trueque.requestedProduct.image}
+								src={trueque.requestedProduct.imageUrl}
 								alt={trueque.requestedProduct.name}
 								width={200}
 								height={150}

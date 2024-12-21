@@ -4,24 +4,24 @@ import { useTrueques } from '@/hooks/useTrueques'
 import { TruequeCard } from '@/components/TruequeCard'
 import { FilterButtons } from '@/components/FilterButtons'
 import { FiltroTipo } from '@/types/types'
-import useRequireAuth from '@/hooks/useRequiereAuth'
+// import useRequireAuth from '@/hooks/useRequiereAuth'
 
 export default function MisTrueques() {
-	const isAuthenticated = useRequireAuth()
+	// const isAuthenticated = useRequireAuth()
 
-	const { trueques, loading } = useTrueques()
+	const { trueques } = useTrueques()
 	const [filtro, setFiltro] = useState<FiltroTipo>('todos')
-	if (!isAuthenticated) {
-		return null // O un indicador de carga
-	}
+	// if (!isAuthenticated) {
+	// 	return null // O un indicador de carga
+	// }
 	const truequesFiltrados = trueques.filter((trueque) => {
-		if (filtro === 'activos') return trueque.estado === 'pendiente'
-		if (filtro === 'completados') return trueque.estado === 'aceptado'
-		if (filtro === 'rechazados') return trueque.estado === 'rechazado'
+		if (filtro === 'activos') return trueque.status === 'PENDIENTE'
+		if (filtro === 'completados') return trueque.status === 'ACEPTADO'
+		if (filtro === 'rechazados') return trueque.status === 'RECHAZADO'
 		return true
 	})
 
-	if (loading) return <div>Cargando...</div>
+	// if (loading) return <div>Cargando...</div>
 
 	return (
 		<div className='container mx-auto p-4'>
@@ -38,6 +38,12 @@ export default function MisTrueques() {
 					<TruequeCard
 						key={trueque.id}
 						trueque={trueque}
+						onAccept={() => {
+							/* Implement accept logic */
+						}}
+						onReject={() => {
+							/* Implement reject logic */
+						}}
 					/>
 				))}
 			</div>

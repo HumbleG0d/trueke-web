@@ -3,24 +3,15 @@ import { useState, ChangeEvent, FormEvent } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRegisterUser } from '@/hooks/useRegisterUser'
-
-interface NewUser {
-	name: string
-	email: string
-	password: string
-	confirmPassword: string
-	location: string
-	description: string
-}
+import { NewUser } from '@/types/types'
 
 const Register: React.FC = () => {
 	const [formData, setFormData] = useState<NewUser>({
-		name: '',
+		username: '',
 		email: '',
 		password: '',
 		confirmPassword: '',
-		location: '',
-		description: ''
+		location: ''
 	})
 	const [error, setError] = useState<string>('')
 	const [success, setSuccess] = useState<string>('')
@@ -47,12 +38,11 @@ const Register: React.FC = () => {
 		registerUser(formData)
 		setSuccess('Registro exitoso. Puedes iniciar sesión ahora.')
 		setFormData({
-			name: '',
+			username: '',
 			email: '',
 			password: '',
 			confirmPassword: '',
-			location: '',
-			description: ''
+			location: ''
 		})
 	}
 
@@ -91,7 +81,7 @@ const Register: React.FC = () => {
 								id='name'
 								name='name'
 								className='w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-								value={formData.name}
+								value={formData.username}
 								onChange={handleChange}
 								required
 								placeholder='Tu nombre'
@@ -170,23 +160,7 @@ const Register: React.FC = () => {
 								placeholder='Tu ubicación'
 							/>
 						</div>
-						<div>
-							<label
-								htmlFor='description'
-								className='block text-gray-700'
-							>
-								Descripción
-							</label>
-							<textarea
-								id='description'
-								name='description'
-								className='w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-								value={formData.description}
-								onChange={handleChange}
-								placeholder='Descríbete brevemente'
-								rows={3}
-							/>
-						</div>
+
 						<button
 							type='submit'
 							className='w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-200'
