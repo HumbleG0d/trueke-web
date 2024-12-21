@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: api_truek
+  config:
+    import: classpath:application-secrets.yml
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 8081
