@@ -1,98 +1,73 @@
-// contexts/AuthContext.tsx
+'use client'
+import { User } from '@/types/types'
+import {
+	createContext,
+	useContext,
+	useState,
+	useEffect,
+	ReactNode
+} from 'react'
 
-'use client';
+interface AuthContextType {
+	isAuthenticated: boolean
+	isLoading: boolean
+	user: User | null
+	login: (userData: User) => void
+	logout: () => void
+}
 
-import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-// Definir el tipo para el usuario
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  // Añade otros campos según tus necesidades
-};
+export function AuthProvider({ children }: { children: ReactNode }) {
+	const [isAuthenticated, setIsAuthenticated] = useState(false)
+	const [isLoading, setIsLoading] = useState(true)
+	const [user, setUser] = useState<User | null>(null)
 
-// Definir el tipo para el contexto de autenticación
-type AuthContextType = {
-  isAuthenticated: boolean;
-  user: User | null;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
-};
+	useEffect(() => {
+		const checkAuth = () => {
+			try {
+				const storedUser = localStorage.getItem('user')
+				if (storedUser) {
+					const userData = JSON.parse(storedUser)
+					setUser(userData)
+					setIsAuthenticated(true)
+				}
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			} catch (e) {
+				setIsAuthenticated(false)
+				setUser(null)
+			} finally {
+				setIsLoading(false)
+			}
+		}
+		checkAuth()
+	}, [])
 
-// Crear el contexto
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+	const login = (userData: User) => {
+		localStorage.setItem('user', JSON.stringify(userData))
+		setUser(userData)
+		setIsAuthenticated(true)
+	}
 
-// Componente proveedor del contexto
-const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null);
-  const router = useRouter();
+	const logout = () => {
+		localStorage.removeItem('user')
+		setUser(null)
+		setIsAuthenticated(false)
+	}
 
-  // Verificar el estado de autenticación al montar el componente
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setIsAuthenticated(true);
-    }
-  }, []);
+	return (
+		<AuthContext.Provider
+			value={{ isAuthenticated, isLoading, user, login, logout }}
+		>
+			{children}
+		</AuthContext.Provider>
+	)
+}
 
-  // Función para iniciar sesión
-  const login = async (email: string, password: string) => {
-    try {
-      // Realizar una solicitud POST a la ruta de API de login
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || 'Error al iniciar sesión');
-      }
-
-      const data = await response.json();
-
-      // Suponiendo que la API devuelve los datos del usuario
-      setUser(data.user);
-      setIsAuthenticated(true);
-      localStorage.setItem('user', JSON.stringify(data.user));
-
-      // Redirigir al dashboard o a la página deseada
-      router.push('/');
-    } catch (error: any) {
-      throw new Error(error.message || 'Error al iniciar sesión');
-    }
-  };
-
-  // Función para cerrar sesión
-  const logout = () => {
-    setUser(null);
-    setIsAuthenticated(false);
-    localStorage.removeItem('user');
-    // Opcional: realizar una solicitud a la ruta de API de logout para invalidar tokens
-    router.push('/auth/login');
-  };
-
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-// Hook personalizado para acceder al contexto
-const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth debe ser usado dentro de un AuthProvider');
-  }
-  return context;
-};
-
-export { AuthProvider, useAuth };
+export function useAuth() {
+	const context = useContext(AuthContext)
+	if (context === undefined) {
+		throw new Error('useAuth must be used within an AuthProvider')
+	}
+	return context
+}

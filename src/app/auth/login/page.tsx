@@ -4,14 +4,17 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useLogin } from '@/hooks/useLogin'
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d).+$/
+
 
 const Login: React.FC = () => {
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
 	const [error, setError] = useState<string>('')
+	const { handleLogin } = useLogin()
 
 	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value)
@@ -21,7 +24,7 @@ const Login: React.FC = () => {
 		setPassword(e.target.value)
 	}
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		// Resetear el error antes de la validación
 		setError('')
@@ -40,13 +43,16 @@ const Login: React.FC = () => {
 			return
 		}
 
-		// Aquí puedes manejar la lógica de autenticación real
-		console.log('Email:', email)
-		console.log('Password:', password)
-
-		// Limpiar el formulario después de la simulación de autenticación
-		setEmail('')
-		setPassword('')
+		try {
+			console.log('Email:', email)
+			console.log('Password:', password)
+			await handleLogin({ email, password })
+			setEmail('')
+			setPassword('')
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		} catch (error) {
+			setError('Error al iniciar sesión')
+		}
 	}
 
 	return (

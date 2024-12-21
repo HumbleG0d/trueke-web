@@ -1,10 +1,11 @@
+'use client'
 import { FeatureCard } from '@/components/FeatureCard'
 import { Header } from '@/components/Header'
 export default function Home() {
 	return (
 		<>
 			<Header />
-			<div className='h-screen w-full bg-[#F5F5F5]'>
+			<div className='h-screen w-full bg-[#f5f5f5]'>
 				<div className='flex flex-col items-center justify-center px-4 py-16'>
 					<h1 className='text-4xl font-bold text-gray-800 mb-6'>
 						Bienvenido a Trueke

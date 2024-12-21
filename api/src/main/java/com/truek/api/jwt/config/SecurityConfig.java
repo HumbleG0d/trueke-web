@@ -1,3 +1,4 @@
+
 package com.truek.api.jwt.config;
 
 import lombok.RequiredArgsConstructor;

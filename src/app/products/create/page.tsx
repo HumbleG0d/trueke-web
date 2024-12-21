@@ -1,138 +1,196 @@
 'use client'
 import { ProductRegister } from '@/types/types'
-import Link from 'next/link'
 import { useState } from 'react'
+import { ButtonToHome } from '@/components/ui/ButtonToHome'
+import Image from 'next/image'
+import { useRegisterProducts } from '@/hooks/useRegisterProducts'
+import { useAuth } from '@/context/AuthContext'
+import { LoginButton } from '@/components/ui/LoginButton'
 
 export default function RegisterProduct() {
-
-	const [fileName, setFileName] = useState<string>('')
-
+	const { registerProduct } = useRegisterProducts()
+	const [file, setFile] = useState<File | null>(null)
+	const { user } = useAuth()
 	const [product, setProduct] = useState<ProductRegister>({
-		nombre: '',
+		idUser: user?.id ?? 0, // Provide default value when user id is undefined
+		name: '',
 		image: '',
-		estado: '',
-		descripcion: ''
+		description: '',
+		status: '',
+		category: ''
 	})
+	const [errors, setErrors] = useState<{ [key: string]: string }>({})
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-		//Logica para Guardar
-		console.log(product)
+		const validationErrors: { [key: string]: string } = {}
+		if (!product.name) validationErrors.nombre = 'El nombre es requerido.'
+		if (!product.description)
+			validationErrors.descripcion = 'La descripción es requerida.'
+
+		if (Object.keys(validationErrors).length > 0) {
+			setErrors(validationErrors)
+			return
+		}
+		if (!file) {
+			validationErrors.image = 'La imagen es requerida.'
+			setErrors(validationErrors)
+			return
+		}
+
+		registerProduct(product, file)
+		// try {
+		// 	const formData = new FormData()
+		// 	formData.append('nombre', product.nombre || '')
+		// 	formData.append('descripcion', product.descripcion || '')
+		// 	formData.append('estado', product.estado || '')
+		// 	formData.append('categoria', product.categoria || '')
+		// 	if (fileName) {
+		// 		formData.append('image', fileName)
+		// 	}
+
+		// 	const response = await axios.post('/api/products', formData)
+		// 	console.log(response.data)
+		// } catch (error) {
+		// 	console.error('Error al guardar el producto:', error)
+		// }
 	}
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files?.[0]) {
-			setFileName(e.target.files[0].name)
+			setFile(e.target.files[0])
+			setProduct({ ...product, image: e.target.files[0].name })
 		}
 	}
 	return (
-		<div className='flex flex-col  h-full w-full bg-gray-100  p-2 border border-gray-200 items-center'>
-			<div className='p-6 w-full max-w-2xl rounded-lg shadow-xl bg-[#20a649]'>
-				<form
-					onSubmit={handleSubmit}
-					className='space-y-4 w-full'
-				>
-					<div>
-						<label className='block text-white mb-1'>Imagen</label>
-						<div className='relative'>
-							<input
-								type='file'
-								className='hidden'
-								onChange={handleFileChange}
-								id='fileInput'
-								name='image'
-								accept='image/*'
-								required
-							/>
-							<label
-								htmlFor='fileInput'
-								className='cursor-pointer flex items-center gap-2 w-full px-4 py-2 bg-white hover:bg-gray-100 text-gray-700 rounded transition-colors border border-gray-300'
-							>
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									className='h-5 w-5'
-									fill='none'
-									viewBox='0 0 24 24'
-									stroke='currentColor'
-								>
-									<path
-										strokeLinecap='round'
-										strokeLinejoin='round'
-										strokeWidth={2}
-										d='M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12'
-									/>
-								</svg>
-								{fileName || 'Seleccionar imagen'}
+		<>
+			<div className='flex flex-col  bg-white p-4 rounded-sm '>
+				<div className='flex w-full h-max flex-col flex-1 '>
+					<form
+						onSubmit={handleSubmit}
+						className='space-y-4  bg-gray-200 rounded-xl p-4 grid grid-cols-2 grid-rows-3 gap-4'
+					>
+						<div className='col-span-1'>
+							<label className='block text-black mb-2'>
+								Nombre del Producto
 							</label>
+							<input
+								type='text'
+								value={product.name}
+								onChange={(e) =>
+									setProduct({ ...product, name: e.target.value })
+								}
+								className='w-full px-3 py-2 border rounded'
+								placeholder='Ingrese el nombre'
+							/>
+							{errors.nombre && (
+								<p className='text-red-500 text-sm'>{errors.nombre}</p>
+							)}
 						</div>
-					</div>
-					<div>
-						<label
-							htmlFor='nombre'
-							className='block text-white mb-1'
-						>
-							Título
-						</label>
-						<input
-							type='text'
-							id='nombre'
-							name='nombre'
-							className='w-full border rounded p-2 text-black'
-							required
-						/>
-					</div>
-					<div>
-						<label
-							htmlFor='estado'
-							className='block text-white mb-1'
-						>
-							Estado
-						</label>
-						<select
-							id='estado'
-							name='estado'
-							className='w-full border rounded p-2 bg-white text-black'
-							required
-						>
-							<option value=''>Selecciona un estado</option>
-							<option value='nuevo'>Nuevo</option>
-							<option value='seminuevo'>Semi-nuevo</option>
-							<option value='usado'>Usado</option>
-						</select>
-					</div>
-					<div>
-						<label
-							htmlFor='descripcion'
-							className='block text-white mb-1'
-						>
-							Descripción
-						</label>
-						<textarea
-							id='descripcion'
-							name='descripcion'
-							className='w-full px-4 py-2 rounded border border-gray-300 text-black'
-							rows={4}
-							required
-						/>
-					</div>
 
-					<div className='flex justify-end gap-2'>
-						<Link
-							href={`/products`}
-							type='button'
-							className='px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded'
-						>
-							Cancelar
-						</Link>
-						<button
-							type='submit'
-							className='w-full py-2 px-4 bg-white text-green-600 rounded hover:bg-gray-100 transition-colors'
-						>
-							Publicar
-						</button>
-					</div>
-				</form>
+						<div className='row-span-3 col-span-1 items-center justify-center flex flex-col '>
+							<label className='block text-black '>Imagen</label>
+							<div className='flex flex-col h-full  rounded-md '>
+								<input
+									type='file'
+									onChange={handleFileChange}
+									className=' w-full py-2 border rounded '
+									accept='image/*'
+								/>
+								{product.image && (
+									<div className='flex-1 w-full'>
+										<Image
+											src={URL.createObjectURL(
+												(
+													document.querySelector(
+														'input[type="file"]'
+													) as HTMLInputElement
+												)?.files?.[0] || new Blob()
+											)}
+											width={250}
+											height={250}
+											alt='Preview'
+											className=' rounded mx-auto'
+										/>
+									</div>
+								)}
+							</div>
+						</div>
+
+						<div className='col-span-1'>
+							<label className='block text-black mb-2'>Estado</label>
+							<select
+								value={product.status}
+								onChange={(e) =>
+									setProduct({ ...product, status: e.target.value })
+								}
+								className='w-full px-3 py-2 border rounded'
+							>
+								<option value=''>Seleccione el estado</option>
+								<option value='nuevo'>Nuevo</option>
+								<option value='seminuevo'>Seminuevo</option>
+								<option value='usado'>Usado</option>
+							</select>
+							{errors.estado && (
+								<p className='text-red-500 text-sm'>{errors.estado}</p>
+							)}
+						</div>
+						<div className='col-span-1'>
+							<label className='block text-black mb-2'>Categoria</label>
+							<select
+								value={product.category}
+								onChange={(e) =>
+									setProduct({ ...product, category: e.target.value })
+								}
+								className='w-full px-3 py-2 border rounded'
+							>
+								<option value=''>Seleccione la categoria</option>
+								<option value='Electrodomesticos'>Electrodomesticos</option>
+								<option value='Tecnologia'>Tecnologia</option>
+								<option value='Juguetes'>Juguetes</option>
+								<option value='Muebles'>Muebles</option>
+								<option value='Ropa'>Ropa</option>
+							</select>
+							{errors.estado && (
+								<p className='text-red-500 text-sm'>{errors.estado}</p>
+							)}
+						</div>
+						<div>
+							<label className='block text-black mb-2'>Descripción</label>
+							<textarea
+								value={product.description}
+								onChange={(e) => {
+									e.target.style.height = 'auto'
+									e.target.style.height = e.target.scrollHeight + 'px'
+									setProduct({ ...product, description: e.target.value })
+								}}
+								className='w-full px-3 py-2 border rounded resize-none min-h-[100px] overflow-hidden'
+								placeholder='Ingrese la descripción'
+							/>
+							{errors.descripcion && (
+								<p className='text-red-500 text-sm'>{errors.descripcion}</p>
+							)}
+						</div>
+						<div className='flex flex-row gap-4 col-span-2'>
+							<ButtonToHome text='Cancelar' />
+
+							{!user ? (
+								<LoginButton />
+							) : (
+								<button
+									type='submit'
+									disabled={!user}
+									className={
+										'w-full py-2 roundedbg-white text-green-600 hover:bg-gray-200 items-center text-center'
+									}
+								>
+									Registrar Producto
+								</button>
+							)}
+						</div>
+					</form>
+				</div>
 			</div>
-		</div>
+		</>
 	)
 }

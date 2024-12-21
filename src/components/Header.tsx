@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 export const Header = () => {
 	return (
-		<div className='bg-[#064E3B]'>
+		<div className='bg-[#064E3B] w-full'>
 			<div className='flex flex-row  justify-between items-center px-8 py-2'>
 				<Link href='/'>
 					<div className='flex flex-row items-center'>
@@ -13,19 +13,19 @@ export const Header = () => {
 							width={80}
 							height={80}
 						/>
-						<strong className='text-2xl'>Truek-e</strong>
+						<strong className='text-2xl text-white'>Truek-e</strong>
 					</div>
 				</Link>
 				<div>
-					<strong className='text-3xl text- italic'>
+					<strong className='text-3xl text- italic text-white'>
 						Dale una segunda vida a lo que ya no usas!
 					</strong>
 				</div>
 				<div className='flex flex-row items-center gap-2'>
-					<Link href='/profile/1'>
+					<Link href='/profile/'>
 						<div>
 							<Image
-								className='object contain'
+								className='object contain '
 								src='/icons/Perfil.svg'
 								alt='imagen de perfil'
 								width={60}
@@ -49,9 +49,12 @@ export const Header = () => {
 					>
 						Publica oferta
 					</a>
-					<animate className=' py-2 border-2 bg-white border-black rounded-r-lg'>
-						Ubicacion
-					</animate>
+					<Link
+						href='/trueques'
+						className=' py-2 border-2 bg-white border-black rounded-r-lg'
+					>
+						Truekes
+					</Link>
 				</div>
 			</div>
 		</div>

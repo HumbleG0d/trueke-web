@@ -1,27 +1,40 @@
-import { ProductCard } from '@/types/types'
+'use client'
+import { ProductData } from '@/types/types'
 import { useState, useEffect } from 'react'
+import { products as productsData } from '@/mocks/products.json'
 
 export function useProducts() {
-  const [products, setProducts] = useState<ProductCard[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+	const [products, setProducts] = useState<ProductData[]>([])
+	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState<string | null>(null)
 
-  const fetchProducts = async () => {
-    try {
-      setLoading(true)
-      const response = await fetch('/api/products')
-      const data = await response.json()
-      setProducts(data)
-    } catch (e) {
-      setError('Error al cargar productos')
-    } finally {
-      setLoading(false)
-    }
-  }
+	const fetchProducts = async () => {
+		try {
+			setLoading(true)
+			const response = await fetch('http://localhost:8081/api/all/products')
+			const data = await response.json()
+			setProducts(data)
+		} catch (e: unknown) {
+			if (e instanceof Error) {
+				setError(e.message)
+			} else {
+				setError('Error al cargar productos')
+			}
+			setProducts(productsData)
+		} finally {
+			setLoading(false)
+		}
+	}
 
-  useEffect(() => {
-    fetchProducts()
-  }, [])
+	const findProduct = (id: number) =>
+		products.find((product) => product.id === id)
 
-  return { products, loading, error, setProducts }
+	const findByUserId = (id: number) =>
+		products.filter((product) => product.idUser === id)
+
+	useEffect(() => {
+		fetchProducts()
+	}, [])
+
+	return { products, loading, error, findProduct, findByUserId }
 }

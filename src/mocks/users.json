@@ -7,7 +7,8 @@
             "email": "john.doe@example.com",
             "bio": "Software developer with 10 years of experience.",
             "age": 30,
-            "location": "San Francisco, USA"
+            "location": "San Francisco, USA",
+            "photo_url": "https://thispersondoesnotexist.com/image"
         },
         {
             "id": 2,
@@ -16,7 +17,8 @@
             "email": "jane.smith@example.com",
             "bio": "Graphic designer and digital artist.",
             "age": 27,
-            "location": "New York, USA"
+            "location": "New York, USA",
+            "photo_url": "https://thispersondoesnotexist.com/image"
         },
         {
             "id": 3,
@@ -25,7 +27,8 @@
             "email": "mike.johnson@example.com",
             "bio": "Tech enthusiast and blogger.",
             "age": 35,
-            "location": "Austin, USA"
+            "location": "Austin, USA",
+            "photo_url": "https://thispersondoesnotexist.com/image"
         },
         {
             "id": 4,
@@ -34,7 +37,8 @@
             "email": "sarah.connor@example.com",
             "bio": "Cybersecurity expert and AI researcher.",
             "age": 32,
-            "location": "Los Angeles, USA"
+            "location": "Los Angeles, USA",
+            "photo_url": "https://thispersondoesnotexist.com/image"
         },
         {
             "id": 5,
@@ -43,7 +47,8 @@
             "email": "emily.blake@example.com",
             "bio": "Freelance writer and travel blogger.",
             "age": 29,
-            "location": "Seattle, USA"
+            "location": "Seattle, USA",
+            "photo_url": "https://thispersondoesnotexist.com/image"
         },
         {
             "id": 6,
@@ -52,7 +57,8 @@
             "email": "david.lee@example.com",
             "bio": "Full-stack developer specializing in React and Node.js.",
             "age": 28,
-            "location": "Chicago, USA"
+            "location": "Chicago, USA",
+            "photo_url": "https://thispersondoesnotexist.com/image"
         },
         {
             "id": 7,
@@ -61,7 +67,8 @@
             "email": "olivia.martin@example.com",
             "bio": "Entrepreneur and startup consultant.",
             "age": 34,
-            "location": "Miami, USA"
+            "location": "Miami, USA",
+            "photo_url": "https://thispersondoesnotexist.com/image"
         },
         {
             "id": 8,
@@ -70,7 +77,8 @@
             "email": "noah.brown@example.com",
             "bio": "Mobile app developer and UX enthusiast.",
             "age": 25,
-            "location": "Denver, USA"
+            "location": "Denver, USA",
+            "photo_url": "https://thispersondoesnotexist.com/image"
         },
         {
             "id": 9,
@@ -79,7 +87,8 @@
             "email": "ava.wilson@example.com",
             "bio": "Digital marketer and SEO specialist.",
             "age": 31,
-            "location": "Boston, USA"
+            "location": "Boston, USA",
+            "photo_url": "https://thispersondoesnotexist.com/image"
         },
         {
             "id": 10,
@@ -88,7 +97,8 @@
             "email": "liam.clark@example.com",
             "bio": "Data scientist with a passion for machine learning.",
             "age": 26,
-            "location": "Phoenix, USA"
+            "location": "Phoenix, USA",
+            "photo_url": "https://thispersondoesnotexist.com/image"
         }
     ]
 }
