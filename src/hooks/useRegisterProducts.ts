@@ -12,11 +12,11 @@ export const useRegisterProducts = () => {
 
 		try {
 			const formData = new FormData()
-			formData.append('userId', product.userId.toString())
-			formData.append('nombre', product.nombre || '')
-			formData.append('descripcion', product.descripcion || '')
-			formData.append('estado', product.estado || '')
-			formData.append('categoria', product.categoria || '')
+			formData.append('userId', product.idUser.toString())
+			formData.append('nombre', product.name || '')
+			formData.append('descripcion', product.description || '')
+			formData.append('estado', product.status || '')
+			formData.append('categoria', product.category || '')
 			formData.append('image', product.image || '')
 			if (file) {
 				formData.append('image', file)

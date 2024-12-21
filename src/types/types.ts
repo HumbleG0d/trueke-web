@@ -5,14 +5,15 @@ export type FilterProps = {
 	height: number
 }
 
-export type ProductCard = {
+export type ProductData = {
 	id: number
-	idUsuario: number
-	nombre: string
+	idUser: number
+	name: string
 	image: string
-	estado: string
-	propietario: string
-	numero_de_estrellas: number
+	status: string
+	description: string
+	owner: string
+	starsCount: number
 	category: string
 }
 
@@ -24,19 +25,20 @@ export type User = {
 	bio: string // Breve descripción del usuario
 	age: number // Edad del usuario
 	location: string // Ubicación del usuario
+	photo_url: string // URL de la foto de perfil
 }
 
 export type ProductProps = {
-	product: ProductCard
+	product: ProductData
 }
 
 export type ProductRegister = {
-	userId: number
-	nombre: string
+	idUser: number
+	name: string
 	image: string
-	estado: string
-	descripcion?: string
-	categoria: string
+	status: string
+	description?: string
+	category: string
 }
 
 export type UserRegister = {
@@ -47,4 +49,25 @@ export type UserRegister = {
 	password: string
 	location: string
 	bio?: string
+}
+
+export interface Trueque {
+	id: number
+	proposedProduct: ProductData
+	requestedProduct: ProductData
+	status: 'pending' | 'accepted' | 'rejected'
+}
+
+export type TruequeStatus = 'pending' | 'accepted' | 'rejected'
+
+export type FiltroTipo = 'todos' | 'activos' | 'completados' | 'rechazados'
+
+export interface TruequeCardProps extends TruequeActions {
+	trueque: Trueque
+	currentUserId?: number
+}
+
+export interface TruequeActions {
+	onAccept: (id: number) => Promise<void> | void
+	onReject: (id: number) => Promise<void> | void
 }

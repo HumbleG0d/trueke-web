@@ -1,10 +1,10 @@
-import { ProductCard } from '@/types/types'
+import { ProductData } from '@/types/types'
 import { users } from '../mocks/users.json'
 
 export default function ProfileData({
 	idUsuario
 }: {
-	idUsuario: ProductCard['idUsuario']
+	idUsuario: ProductData['idUser']
 }) {
 	const userData = users.find((user) => user.id === idUsuario)
 	console.log(userData)
@@ -25,7 +25,6 @@ export default function ProfileData({
 			<div className='p-4 '>
 				<p className='text-black'>{userData?.location}</p>
 			</div>
-			
 		</div>
 	)
 }

@@ -1,16 +1,16 @@
-import { ProductCard } from '@/types/types'
+import { ProductData } from '@/types/types'
 import { Button } from './ui/Button'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export const Product = ({
 	id,
-	nombre,
+	name,
 	image,
-	estado,
-	propietario,
-	numero_de_estrellas
-}: ProductCard) => {
+	status,
+	owner,
+	starsCount
+}: ProductData) => {
 	return (
 		<div className='flex flex-col text-[#064E3B] rounded-lg  border-black shadow-lg p-4 hover:shadow-xl hover:scale-105 hover:bg-gray-200 transition-shadow bg-gray-100 items-center'>
 			<Link href={`/products/${id}`}>
@@ -18,22 +18,22 @@ export const Product = ({
 					<Image
 						className='rounded-lg object-cover'
 						src={image}
-						alt={nombre}
+						alt={name}
 						fill
 						sizes='(max-width: 320px) 100vw'
 					/>
 				</div>
 				<div className='flex flex-col justify-center text-left'>
-					<strong>{nombre}</strong>
-					<span>Estado: {estado}</span>
-					<span>Usuario : {propietario}</span>
+					<strong>{name}</strong>
+					<span>Estado: {status}</span>
+					<span>Usuario : {owner}</span>
 				</div>
 				<div className='flex flex-row'>
 					{[...Array(5)].map((_, index) => (
 						<Image
 							key={index}
 							src={
-								index < numero_de_estrellas
+								index < starsCount
 									? '/icons/Star-fill.svg'
 									: '/icons/Star-blank.svg'
 							}
@@ -43,7 +43,7 @@ export const Product = ({
 						/>
 					))}
 				</div>
-				<span>{numero_de_estrellas} estrellas</span>
+				<span>{starsCount} estrellas</span>
 			</Link>
 			<Button />
 		</div>

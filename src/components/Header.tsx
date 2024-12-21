@@ -49,9 +49,12 @@ export const Header = () => {
 					>
 						Publica oferta
 					</a>
-					<a href='/trueques' className=' py-2 border-2 bg-white border-black rounded-r-lg'>
+					<Link
+						href='/trueques'
+						className=' py-2 border-2 bg-white border-black rounded-r-lg'
+					>
 						Truekes
-					</a>
+					</Link>
 				</div>
 			</div>
 		</div>

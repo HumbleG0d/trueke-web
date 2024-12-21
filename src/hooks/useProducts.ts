@@ -1,8 +1,8 @@
-import { ProductCard } from '@/types/types'
+import { ProductData } from '@/types/types'
 import { useState, useEffect } from 'react'
 import { products as productsData } from '@/mocks/products.json'
 export function useProducts() {
-	const [products, setProducts] = useState<ProductCard[]>([])
+	const [products, setProducts] = useState<ProductData[]>([])
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
 
