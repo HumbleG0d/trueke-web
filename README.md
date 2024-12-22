@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Proyecto con Next.js y API en Java Spring Boot
 
-## Getting Started
+Este proyecto consiste en una aplicación web construida con **Next.js** para el frontend y una API desarrollada en **Java Spring Boot** para el backend. 
 
-First, run the development server:
+## Estructura del Proyecto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+La estructura del proyecto está organizada de la siguiente manera:
+
+```
+.
+├── api/         # Código del backend (Java Spring Boot)
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   └── ...      # Otros archivos y carpetas de la API
+└── src/         # Código del frontend (Next.js)
+    ├── package.json
+    └── ...      # Otros archivos y carpetas del frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Requisitos Previos
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Asegúrate de tener instalados los siguientes programas en tu sistema:
 
-## Learn More
+- [Docker](https://www.docker.com/) y Docker Compose.
+- [Node.js](https://nodejs.org/) (si deseas ejecutar el frontend sin Docker).
+- JDK 17 o superior (si deseas ejecutar el backend sin Docker).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Configuración y Ejecución
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 1. Ejecución con Docker
 
-## Deploy on Vercel
+#### Backend (API - Java Spring Boot)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Navega al directorio `api/`:
+   ```bash
+   cd api
+   ```
+2. Construye la imagen Docker de la API:
+   ```bash
+   docker build -t api_truek .
+   ```
+3. Levanta el contenedor usando Docker Compose:
+   ```bash
+   docker-compose up
+   ```
+4. La API estará disponible en `http://localhost:8081`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Frontend (Next.js)
+
+1. Navega al directorio `src/`:
+   ```bash
+   cd src
+   ```
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+3. Ejecuta la aplicación en modo de desarrollo:
+   ```bash
+   npm run dev
+   ```
+4. El frontend estará disponible en `http://localhost:3000`.
+
+---
+
+## Notas Adicionales
+
+- Asegúrate de que las configuraciones de red entre los contenedores de Docker estén correctamente configuradas para que el frontend pueda comunicarse con la API.
+- Puedes personalizar las variables de entorno editando los archivos `.env` en los respectivos directorios.
+
+---
